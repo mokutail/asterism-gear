@@ -1,0 +1,120 @@
+:root{
+  --night:#0b0e17;
+  --night-2:#121726;
+  --panel:#161c2d;
+  --line:#2a3249;
+  --star:#dfe6f2;
+  --dim:#8d97ad;
+  --faint:#5d6680;
+  --gleam:#b9cbe6;
+  --danger:#e07a6a;
+  --ok:#8fc4a4;
+  --display:"Kaisei Decol","Hiragino Mincho ProN","Yu Mincho",serif;
+  --body:"Zen Old Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --mono:"Cinzel","Times New Roman",serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{margin:0;background:var(--night);color:var(--star);font-family:var(--body);font-size:15px;line-height:1.8}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.wrap{
+  position:relative;z-index:1;max-width:680px;margin:0 auto;
+  padding-block:40px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:28px;
+}
+.wrap.wide{max-width:960px}
+header.mast{display:flex;flex-direction:column;gap:6px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,6vw,44px);line-height:1.25;margin:0;letter-spacing:.06em;text-wrap:balance}
+h2{font-family:var(--display);font-weight:700;font-size:22px;line-height:1.4;margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:700;font-size:17px;margin:0}
+p{margin:0}
+.lede{color:var(--dim);max-width:34em}
+.card{background:color-mix(in srgb,var(--panel) 88%,transparent);border:1px solid var(--line);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:18px;backdrop-filter:blur(3px)}
+label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--dim)}
+input[type=text],select,textarea{font:inherit;color:var(--star);background:var(--night-2);border:1px solid var(--line);border-radius:4px;padding:10px 12px;width:100%}
+input.pw{font-family:var(--mono);font-size:18px;letter-spacing:.2em;text-transform:uppercase}
+textarea{min-height:96px;resize:vertical;font-family:var(--body)}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--gleam);outline-offset:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:520px){.row{grid-template-columns:1fr}}
+button{font:inherit;cursor:pointer}
+
+/* buttons: silver-rimmed plates, like the brass fittings of an observatory */
+.btn{
+  position:relative;align-self:flex-start;
+  font-family:var(--display);font-weight:700;letter-spacing:.22em;font-size:15px;
+  color:var(--star);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--gleam) 18%,var(--night-2)),color-mix(in srgb,var(--gleam) 4%,var(--night-2)));
+  border:1px solid color-mix(in srgb,var(--gleam) 65%,transparent);
+  border-radius:2px;padding:13px 30px 13px 34px;
+  box-shadow:inset 0 0 0 3px var(--night-2),inset 0 0 0 4px color-mix(in srgb,var(--gleam) 22%,transparent),0 0 22px color-mix(in srgb,var(--gleam) 12%,transparent);
+  transition:box-shadow .25s,border-color .25s,color .25s;
+}
+.btn::before{content:"";position:absolute;left:14px;top:50%;width:6px;height:6px;margin-top:-3px;transform:rotate(45deg);background:var(--gleam);opacity:.8}
+.btn:hover:not(:disabled){border-color:var(--gleam);box-shadow:inset 0 0 0 3px var(--night-2),inset 0 0 0 4px color-mix(in srgb,var(--gleam) 45%,transparent),0 0 30px color-mix(in srgb,var(--gleam) 26%,transparent)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.ghost{background:transparent;box-shadow:none;border-color:var(--line);font-weight:500;color:var(--dim);padding:10px 18px;letter-spacing:.12em}
+.btn.ghost::before{display:none}
+.btn.ghost:hover:not(:disabled){color:var(--star);border-color:var(--gleam);box-shadow:none}
+.btn.small{font-size:13px;padding:8px 16px 8px 28px;letter-spacing:.12em}
+.btn.small::before{left:12px;width:5px;height:5px;margin-top:-2.5px}
+.btn.ghost.small{padding:7px 14px}
+.btn.danger{background:transparent;color:var(--danger);border-color:color-mix(in srgb,var(--danger) 50%,transparent);box-shadow:none}
+.btn.danger::before{background:var(--danger)}
+.note{font-size:13px;color:var(--faint)}
+.err{font-size:13px;color:var(--danger)}
+.okmsg{font-size:13px;color:var(--ok)}
+
+/* question */
+.qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.qnum{font-family:var(--display);font-size:15px;color:var(--gleam);letter-spacing:.12em}
+.qcount{font-family:var(--mono);font-size:12px;color:var(--faint);font-variant-numeric:tabular-nums}
+.meter{display:flex;gap:4px}
+.meter i{flex:1;height:3px;background:var(--line);border-radius:2px}
+.meter i.on{background:var(--gleam)}
+.qtext{font-family:var(--display);font-weight:700;font-size:clamp(19px,4.2vw,23px);line-height:1.6;text-wrap:balance}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{text-align:left;background:var(--night-2);color:var(--star);border:1px solid var(--line);border-radius:2px;padding:13px 16px;line-height:1.6;display:flex;gap:14px;align-items:baseline;transition:border-color .2s,background .2s}
+.opt:hover{border-color:var(--gleam);background:color-mix(in srgb,var(--gleam) 6%,var(--night-2))}
+.opt .k{font-family:var(--display);font-size:13px;color:var(--gleam);flex:none;opacity:.7}
+.opt[aria-pressed=true]{border-color:var(--gleam);background:color-mix(in srgb,var(--gleam) 12%,var(--night-2))}
+.navrow{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+
+.done{align-items:center;text-align:center;padding-block:44px}
+.done .lede{max-width:none;line-height:2.1}
+.brooch{width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0 6%,#e8edf6 7% 30%,#8f9ab0 70%,#4b5368 100%);box-shadow:0 0 30px rgba(220,230,250,.25)}
+.seal{white-space:pre-wrap;text-align:left;font-size:14px;width:100%;background:var(--night-2);border:1px solid var(--line);border-radius:4px;padding:14px 16px;user-select:all;line-height:1.9}
+
+.results{display:flex;flex-direction:column;gap:14px}
+.res{border:1px solid var(--line);border-left:4px solid var(--c);border-radius:4px;background:color-mix(in srgb,var(--panel) 92%,transparent);padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.res-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.who{display:flex;flex-direction:column;gap:2px;min-width:0}
+.who strong{font-family:var(--display);font-size:20px;overflow-wrap:anywhere}
+.who small{color:var(--dim);font-size:13px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.empty{text-align:center;color:var(--dim);padding:40px 20px;border:1px dashed var(--line);border-radius:6px;display:flex;flex-direction:column;gap:8px;align-items:center}
+.fate{display:flex;flex-direction:column;gap:10px}
+.fate-h{font-size:13px;color:var(--dim)}
+.fate-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:420px){.fate-grid{grid-template-columns:1fr}}
+.fate-card{position:relative;text-align:left;display:flex;flex-direction:column;gap:4px;padding:14px 16px 16px;color:var(--star);
+  background:linear-gradient(160deg,color-mix(in srgb,var(--gleam) 7%,var(--night-2)),var(--night-2) 60%);
+  border:1px solid var(--line);border-radius:2px;transition:border-color .2s,box-shadow .2s}
+.fate-card::after{content:"";position:absolute;inset:4px;border:1px solid color-mix(in srgb,var(--gleam) 10%,transparent);pointer-events:none}
+.fate-card:hover{border-color:color-mix(in srgb,var(--gleam) 60%,transparent)}
+.fate-card[aria-checked=true]{border-color:var(--gleam);box-shadow:0 0 22px color-mix(in srgb,var(--gleam) 20%,transparent);background:linear-gradient(160deg,color-mix(in srgb,var(--gleam) 18%,var(--night-2)),var(--night-2) 70%)}
+.fate-card[aria-checked=true]::after{border-color:color-mix(in srgb,var(--gleam) 40%,transparent)}
+.fate-no{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--faint)}
+.fate-name{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.08em}
+.fate-line{font-size:12px;color:var(--dim);line-height:1.6}
+.switch{font-size:13px;color:var(--dim);background:none;border:0;text-decoration:underline;padding:0;align-self:flex-start}
+.steps{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:8px}
+.kbd{font-family:var(--mono);background:var(--night-2);border:1px solid var(--line);border-radius:3px;padding:1px 6px;font-size:13px}
+@media (prefers-reduced-motion:no-preference){
+  .fade{animation:fade .5s ease both}
+  @keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){.btn,.opt{transition:none}}
