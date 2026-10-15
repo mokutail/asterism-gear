@@ -29,14 +29,18 @@ function lsSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); return true
 
 /* 合言葉 */
 var ABC="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-function pwCheck(s){ var h=17; for(var i=0;i<s.length;i++) h=(h*37+ABC.indexOf(s[i])+11)%1021; return ABC[h%32]+ABC[Math.floor(h/32)%32]; }
-function genPw(){ var s=""; for(var i=0;i<4;i++) s+=ABC[Math.floor(Math.random()*32)]; return s+"-"+pwCheck(s); }
+/* 合言葉は「言葉-星の印」。印は言葉から決まる三文字で、通信しなくても確かめられる */
+function cleanPw(raw){ return String(raw).normalize("NFKC").replace(/\s+/g,"").replace(/[‐‑‒–—―−－]/g,"-").toUpperCase(); }
+function pwSig(base){ var h=2166136261, s="asterism-gear:"+base; for(var i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619)>>>0; } return ABC[h%32]+ABC[(h>>>5)%32]+ABC[(h>>>10)%32]; }
+function makePw(word){ var base=cleanPw(word).replace(/-+$/,""); if(!base||Array.from(base).length>16) return null; return base+"-"+pwSig(base); }
+function genPw(){ var s=""; for(var i=0;i<4;i++) s+=ABC[Math.floor(Math.random()*32)]; return makePw(s); }
 function normPw(raw){
-  var t=String(raw).normalize("NFKC").replace(/\s+/g,"").toUpperCase();
-  if(!t||Array.from(t).length>20) return null;
-  var m=t.match(/^([A-Z0-9]{4})-?([A-Z0-9]{2})$/);
-  return m?m[1]+"-"+m[2]:t;
+  var t=cleanPw(raw); if(!t||Array.from(t).length>24) return null;
+  var i=t.lastIndexOf("-");
+  if(i<0) return t.length>3?t.slice(0,-3)+"-"+t.slice(-3):t;
+  return t;
 }
+function pwValid(pw){ if(!pw) return false; var i=pw.lastIndexOf("-"); return i>0&&pw.slice(i+1)===pwSig(pw.slice(0,i)); }
 
 /* 星の刻印 */
 function sealCheck(d){ var s=7; for(var i=0;i<d.length;i++) s=(s*31+(+d[i]+1)*(i+5))%1021; return ABC[s%32]+ABC[Math.floor(s/32)%32]; }

@@ -19,7 +19,7 @@ function intro(){
   app.append(mast("ブローチに手を当て、己を晒せ。"));
   var ready=function(){ return !!(st.pw.trim()&&st.pc.trim()&&st.ho); };
   var btn=el("button",{class:"btn",disabled:!ready(),onclick:begin},"問いを受ける");
-  var pw=el("input",{type:"text",id:"pw",class:"pw",maxlength:"20",autocomplete:"off",autocapitalize:"characters",spellcheck:"false",value:st.pw,
+  var pw=el("input",{type:"text",id:"pw",class:"pw",maxlength:"24",autocomplete:"off",autocapitalize:"characters",spellcheck:"false",value:st.pw,
     oninput:function(e){ st.pw=e.target.value; btn.disabled=!ready(); }});
   var pc=el("input",{type:"text",id:"pc",maxlength:"40",autocomplete:"off",value:st.pc,
     oninput:function(e){ st.pc=e.target.value; btn.disabled=!ready(); }});
@@ -84,7 +84,7 @@ function done(){
 
 function begin(){
   var pw=normPw(st.pw);
-  if(!pw){ st.err="その言葉に、星は応えない。観測者から授かった合言葉を、もう一度確かめなさい（20字まで）。"; render(); return; }
+  if(!pwValid(pw)){ st.err="その言葉に、星は応えない。観測者から授かった合言葉を、末尾の印まで正しく記しなさい。"; render(); return; }
   if(usedHere().indexOf(pw)>=0){ st.err="その合言葉による定着は、すでに終わっている。"; render(); return; }
   st.pw=pw; st.err=""; st.step="q"; st.i=0; st.answers=[]; st.words="";
   st.orders=Q.map(function(q){ return q.last?q.o.map(function(_,k){ return k; }):shuffle(q.o.length); });
